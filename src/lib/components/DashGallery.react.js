@@ -14,10 +14,10 @@ export default class DashGallery extends Component {
         super(props);
         //this.ref = React.createRef();
         //ref = useRef(null)
-        // this.state = {
+        this.state = {
             
-        //     images: JSON.parse(JSON.stringify(this.props.images))
-        // }
+            images: JSON.parse(JSON.stringify(this.props.images))
+        }
 
         this.onSelectImage = this.onSelectImage.bind(this);
         //     //gallery: this.updateGallery(this.props.gallery)
@@ -25,16 +25,16 @@ export default class DashGallery extends Component {
     }
 
     onSelectImage (index, image) {
-            console.log(index)
-            console.log(image)
-            console.log(this.props.images)
-            var images = this.props.images.slice();
+            // console.log(index)
+            // console.log(image)
+            // console.log(this.props.images)
+            var images = this.state.images.slice();
             var img = images[index];
             if(img.hasOwnProperty("isSelected"))
                 img.isSelected = !img.isSelected;
             else
                 img.isSelected = true;
-            this.props.setProps({images: images})
+            this.setState({images: images})
             // this.setState({
             //     images: images
             // });
@@ -54,17 +54,18 @@ export default class DashGallery extends Component {
         // if (prevProps.images != images) {
         //     this.setState({images: images})
         // }
+        console.log('prev', prevProps.images)
         console.log('props', images)
         console.log('state', this.state.images)
-        // if (this.state.images != images) {
-        //     this.props.setProps({images: JSON.parse(JSON.stringify(this.state.images))})
-        // }
+        if (this.state.images != images) {
+            this.props.setProps({images: JSON.parse(JSON.stringify(this.state.images))})
+        }
     }
     render() {
         const {id, images, setProps, value} = this.props;
 
         return (
-            <Gallery images={images}
+            <Gallery images={this.state.images}
                      onSelectImage={this.onSelectImage}
             />
             // ref={this.ref}/>
