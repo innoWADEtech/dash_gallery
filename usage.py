@@ -36,8 +36,25 @@ IMAGES =[
         'caption': 'Data',
         'thumbnailWidth': 320,
         'thumbnailHeight': 212,
+    },
+    {
+        'src':'/assets/plot.png',
+        'thumbnail':'/assets/plot.png',
+        'tags':[{'value': 'data', 'title': 'data'}],
+        'caption': 'Data',
+        'thumbnailWidth': 320,
+        'thumbnailHeight': 212,
     }
 ]
+
+add = {
+        'src':'/assets/plot.png',
+        'thumbnail':'/assets/plot.png',
+        'tags':[{'value': 'data', 'title': 'data'}],
+        'caption': 'Data',
+        'thumbnailWidth': 320,
+        'thumbnailHeight': 212,
+    }
 
 app.layout = html.Div([
     dash_gallery.DashGallery(
@@ -46,10 +63,21 @@ app.layout = html.Div([
         options = {'lightBoxWidth': 500, 'rowHeight': 100, 'showImageCount': False, 'margin': 5}
     ),
     html.Div(id='output'),
-    html.Button(id='options')
+    html.Button('Options',id='options'),
+    html.Button('Image', id='image')
 ])
 
-
+@app.callback(Output('input','images'),
+              Input('image', 'n_clicks'),
+              State('input','images'))
+def update(n_clicks, options):
+    if options == None:
+        return dash.no_update
+    if n_clicks:
+        options.append(add)
+        return options
+    else:
+        return dash.no_update
 @app.callback(Output('output', 'children'), [Input('input', 'selected')])
 def display_output(images):
     # selected = []

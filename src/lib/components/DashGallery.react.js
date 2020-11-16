@@ -80,6 +80,9 @@ export default class DashGallery extends Component {
         // console.log(this.ref.current)
         // ref.Gallery.enableImageSelection = this.props.gallery
     // }
+    async updateOptions (options) {
+        this.setState(options)
+    }
 
     componentDidUpdate(prevProps) {
         const {images, options} = this.props
@@ -92,13 +95,22 @@ export default class DashGallery extends Component {
         if (prevProps.images != images) {
             this.setState({images: images})
         }
-        if (this.state.images != images) {
-            this.props.setProps({images: JSON.parse(JSON.stringify(this.state.images))})
-        }
+        // if (this.state.images != images) {
+        //     this.props.setProps({images: JSON.parse(JSON.stringify(this.state.images))})
+        // }
         if (prevProps.options != options) {
             if (options) {
-                this.setState(options)
-                this.setState({images: this.state.images})
+                this.updateOptions(options).then(() => {
+                //this.setState(options)
+                let imageState = this.state.images.slice()
+                if (imageState[0].hasOwnProperty("tagStyle")) {
+                    delete  imageState[0].tagStyle
+                } else {imageState[0]['tagStyle'] = ''}
+                this.setState({images: imageState})
+            })
+                //this.setState({options: options})
+                //this.forceUpdate()
+                //this.setState({images: this.state.images})
                 
                 // for (const [key, value] of Object.entries(options)) {
                 //     this.state[key] = value

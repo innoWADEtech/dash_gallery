@@ -18,6 +18,20 @@
           }
         ],
         "returns": null
+      },
+      {
+        "name": "updateOptions",
+        "docblock": null,
+        "modifiers": [
+          "async"
+        ],
+        "params": [
+          {
+            "name": "options",
+            "type": null
+          }
+        ],
+        "returns": null
       }
     ],
     "props": {
