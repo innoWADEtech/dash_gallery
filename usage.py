@@ -1,6 +1,6 @@
 import dash_gallery
 import dash
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import dash_html_components as html
 
 app = dash.Dash(__name__)
@@ -33,7 +33,9 @@ IMAGES =[
         'src': "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
         'thumbnail': "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
         'tags':[{'value': 'data', 'title': 'data'}],
-        'caption': 'Data'
+        'caption': 'Data',
+        'thumbnailWidth': 320,
+        'thumbnailHeight': 212,
     }
 ]
 
@@ -41,22 +43,38 @@ app.layout = html.Div([
     dash_gallery.DashGallery(
         id='input',
         images = IMAGES,
-        gallery = True
+        options = {'lightBoxWidth': 500, 'rowHeight': 100, 'showImageCount': False, 'margin': 5}
     ),
-    html.Div(id='output')
+    html.Div(id='output'),
+    html.Button(id='options')
 ])
 
 
-@app.callback(Output('output', 'children'), [Input('input', 'images')])
+@app.callback(Output('output', 'children'), [Input('input', 'selected')])
 def display_output(images):
-    selected = []
-    for image in images:
-        select = False
-        if 'isSelected' in image:
-            select = image['isSelected']
-        selected.append(select)
-    return 'You have selected {}'.format(selected)
+    # selected = []
+    # for image in images:
+    #     select = False
+    #     if 'isSelected' in image:
+    #         select = image['isSelected']
+    #     selected.append(select)
+    return 'You have selected {}'.format(images)
 
+@app.callback(Output('input','options'),
+              Input('options', 'n_clicks'),
+              State('input','options'))
+def update(n_clicks, options):
+    if options == None:
+        return dash.no_update
+    if n_clicks:
+        if options['rowHeight'] == 100:
+            options['rowHeight'] = 300
+        else:
+            options['rowHeight'] = 100
+        # options = {'rowHeight': 300}
+        return options
+    else:
+        return dash.no_update
 
 if __name__ == '__main__':
     app.run_server(debug=True)

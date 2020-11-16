@@ -35,12 +35,23 @@
         "required": false,
         "description": "Images to display"
       },
-      "gallery": {
+      "options": {
         "type": {
-          "name": "bool"
+          "name": "object"
         },
         "required": false,
-        "description": "Gallery Options"
+        "description": "Options"
+      },
+      "selected": {
+        "type": {
+          "name": "array"
+        },
+        "required": false,
+        "description": "Gallery Options",
+        "defaultValue": {
+          "value": "[]",
+          "computed": false
+        }
       },
       "value": {
         "type": {

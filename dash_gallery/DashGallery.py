@@ -14,15 +14,16 @@ which is editable by the user.
 Keyword arguments:
 - id (string; optional): The ID used to identify this component in Dash callbacks.
 - images (list; optional): Images to display
-- gallery (boolean; optional): Gallery Options
+- options (dict; optional): Options
+- selected (list; optional): Gallery Options
 - value (string; optional): The value displayed in the input."""
     @_explicitize_args
-    def __init__(self, id=Component.UNDEFINED, images=Component.UNDEFINED, gallery=Component.UNDEFINED, value=Component.UNDEFINED, **kwargs):
-        self._prop_names = ['id', 'images', 'gallery', 'value']
+    def __init__(self, id=Component.UNDEFINED, images=Component.UNDEFINED, options=Component.UNDEFINED, selected=Component.UNDEFINED, value=Component.UNDEFINED, **kwargs):
+        self._prop_names = ['id', 'images', 'options', 'selected', 'value']
         self._type = 'DashGallery'
         self._namespace = 'dash_gallery'
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['id', 'images', 'gallery', 'value']
+        self.available_properties = ['id', 'images', 'options', 'selected', 'value']
         self.available_wildcard_properties =            []
 
         _explicit_args = kwargs.pop('_explicit_args')

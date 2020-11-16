@@ -10,7 +10,8 @@ ExampleComponent is an example component. It takes a property, `label`, and disp
 }
 
 \usage{
-dashGallery(id=NULL, images=NULL, gallery=NULL, value=NULL)
+dashGallery(id=NULL, images=NULL, options=NULL, selected=NULL,
+value=NULL)
 }
 
 \arguments{
@@ -18,7 +19,9 @@ dashGallery(id=NULL, images=NULL, gallery=NULL, value=NULL)
 
 \item{images}{Unnamed list. Images to display}
 
-\item{gallery}{Logical. Gallery Options}
+\item{options}{Named list. Options}
+
+\item{selected}{Unnamed list. Gallery Options}
 
 \item{value}{Character. The value displayed in the input.}
 }

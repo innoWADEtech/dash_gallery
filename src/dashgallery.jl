@@ -14,11 +14,12 @@ which is editable by the user.
 Keyword arguments:
 - `id` (String; optional): The ID used to identify this component in Dash callbacks.
 - `images` (Array; optional): Images to display
-- `gallery` (Bool; optional): Gallery Options
+- `options` (Dict; optional): Options
+- `selected` (Array; optional): Gallery Options
 - `value` (String; optional): The value displayed in the input.
 """
 function dashgallery(; kwargs...)
-        available_props = Symbol[:id, :images, :gallery, :value]
+        available_props = Symbol[:id, :images, :options, :selected, :value]
         wild_props = Symbol[]
         return Component("dashgallery", "DashGallery", "dash_gallery", available_props, wild_props; kwargs...)
 end

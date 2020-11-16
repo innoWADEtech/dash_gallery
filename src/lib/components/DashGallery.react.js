@@ -14,11 +14,22 @@ export default class DashGallery extends Component {
         super(props);
         //this.ref = React.createRef();
         //ref = useRef(null)
-        this.state = {
-            
+        this.state = {... this.defaultProps,
             images: JSON.parse(JSON.stringify(this.props.images))
         }
+        if (this.props.options) {
+            for (const [key, value] of Object.entries(this.props.options)) {
+                this.state[key] = value
+            }
+        }
+       let sele = []
 
+       this.props.images.forEach((img,index) => {
+           if(img.hasOwnProperty("isSelected")){
+               if(img.isSelected == true){
+                    sele.push(index)
+               }}})
+        this.props.setProps({selected: sele})
         this.onSelectImage = this.onSelectImage.bind(this);
         //     //gallery: this.updateGallery(this.props.gallery)
         // };
@@ -26,15 +37,36 @@ export default class DashGallery extends Component {
 
     onSelectImage (index, image) {
             // console.log(index)
-            // console.log(image)
+            console.log(image)
+            console.log(this.props.selected)
             // console.log(this.props.images)
             var images = this.state.images.slice();
             var img = images[index];
+            // let selection = [... this.props.selected]
+            // let position = this.props.selected.indexOf(index)
+            
+            // let selection = [... this.props.selected]
+            // console.log(selection,position)
+            // if (position == -1) {
+            //     selection = selection.push(index)
+            // } else {
+            //     selection = selection.filter(item => item !== index)
+            //     // selection.slice(position,1)
+            // }
+            // m rconsole.log(selection)
             if(img.hasOwnProperty("isSelected"))
                 img.isSelected = !img.isSelected;
             else
                 img.isSelected = true;
             this.setState({images: images})
+            let sele = []
+            this.state.images.forEach((img,index) => {
+                if(img.hasOwnProperty("isSelected")){
+                    if(img.isSelected == true){
+                         sele.push(index)
+                    }}})
+            this.props.setProps({selected: sele})
+            // this.props.setProps({selected: selection})
             // this.setState({
             //     images: images
             // });
@@ -50,15 +82,29 @@ export default class DashGallery extends Component {
     // }
 
     componentDidUpdate(prevProps) {
-        const {images} = this.props
+        const {images, options} = this.props
         // if (prevProps.images != images) {
         //     this.setState({images: images})
         // }
         console.log('prev', prevProps.images)
         console.log('props', images)
         console.log('state', this.state.images)
+        if (prevProps.images != images) {
+            this.setState({images: images})
+        }
         if (this.state.images != images) {
             this.props.setProps({images: JSON.parse(JSON.stringify(this.state.images))})
+        }
+        if (prevProps.options != options) {
+            if (options) {
+                this.setState(options)
+                this.setState({images: this.state.images})
+                
+                // for (const [key, value] of Object.entries(options)) {
+                //     this.state[key] = value
+                   
+                // }
+            }
         }
     }
     render() {
@@ -67,6 +113,11 @@ export default class DashGallery extends Component {
         return (
             <Gallery images={this.state.images}
                      onSelectImage={this.onSelectImage}
+                     lightBoxWidth={this.state.lightBoxWidth}
+                     rowHeight={this.state.rowHeight}
+                     margin={this.state.margin}
+                     showImageCount={this.state.showImageCount}
+                     maxRows={this.state.maxRows}
             />
             // ref={this.ref}/>
             // <div id={id}>
@@ -91,7 +142,9 @@ export default class DashGallery extends Component {
     }
 }
 
-DashGallery.defaultProps = {};
+DashGallery.defaultProps = {
+    selected: []
+};
 
 DashGallery.propTypes = {
     /**
@@ -105,9 +158,13 @@ DashGallery.propTypes = {
     images: PropTypes.array,
 
     /**
+     * Options
+     */
+    options: PropTypes.object,
+    /**
      * Gallery Options
      */
-    gallery: PropTypes.bool,
+    selected: PropTypes.array,
 
     /**
      * The value displayed in the input.

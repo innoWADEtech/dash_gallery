@@ -1,8 +1,8 @@
 # AUTO GENERATED FILE - DO NOT EDIT
 
-dashGallery <- function(id=NULL, images=NULL, gallery=NULL, value=NULL) {
+dashGallery <- function(id=NULL, images=NULL, options=NULL, selected=NULL, value=NULL) {
     
-    props <- list(id=id, images=images, gallery=gallery, value=value)
+    props <- list(id=id, images=images, options=options, selected=selected, value=value)
     if (length(props) > 0) {
         props <- props[!vapply(props, is.null, logical(1))]
     }
@@ -10,7 +10,7 @@ dashGallery <- function(id=NULL, images=NULL, gallery=NULL, value=NULL) {
         props = props,
         type = 'DashGallery',
         namespace = 'dash_gallery',
-        propNames = c('id', 'images', 'gallery', 'value'),
+        propNames = c('id', 'images', 'options', 'selected', 'value'),
         package = 'dashGallery'
         )
 
