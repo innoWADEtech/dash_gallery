@@ -2,7 +2,7 @@ import dash_gallery
 import dash
 from dash.dependencies import Input, Output, State
 import dash_html_components as html
-
+import os
 app = dash.Dash(__name__)
 
 IMAGES =[
@@ -56,16 +56,23 @@ add = {
         'thumbnailHeight': 212,
     }
 
+   
+svg_files = os.listdir('./assets')
+svg_images = []
+for svg in svg_files:
+    svg_images.append({'src': f'/assets/{svg}', 'thumbnail':f'/assets/{svg}',
+                       'thumbnailWidth': 200,'thumbnailHeight': 200})
+
 app.layout = html.Div([
     dash_gallery.DashGallery(
         id='input',
-        images = IMAGES,
-        options = {'lightBoxWidth': 500, 'rowHeight': 100, 'showImageCount': False, 'margin': 5}
+        images = svg_images,
+        options = {'lightBoxWidth': 500, 'rowHeight': 200, 'showImageCount': False, 'margin': 5}
     ),
     html.Div(id='output'),
     html.Button('Options',id='options'),
     html.Button('Image', id='image')
-])
+], id='box', style={'width': '2500px'})
 
 @app.callback(Output('input','images'),
               Input('image', 'n_clicks'),
@@ -89,18 +96,22 @@ def display_output(images):
     return 'You have selected {}'.format(images)
 
 @app.callback(Output('input','options'),
+              Output('box','style'),
               Input('options', 'n_clicks'),
               State('input','options'))
 def update(n_clicks, options):
     if options == None:
         return dash.no_update
     if n_clicks:
+        styled = {}
         if options['rowHeight'] == 100:
-            options['rowHeight'] = 300
+            options['rowHeight'] = 200
+            styled = {'width': '2500px'}
         else:
             options['rowHeight'] = 100
+            styled = {'width': '1300px'}
         # options = {'rowHeight': 300}
-        return options
+        return options, styled
     else:
         return dash.no_update
 
