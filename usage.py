@@ -62,7 +62,7 @@ svg_images = []
 for svg in svg_files:
     svg_images.append({'src': f'/assets/{svg}', 'thumbnail':f'/assets/{svg}',
                        'thumbnailWidth': 200,'thumbnailHeight': 200})
-
+svg_images[3]['isSelected'] = True
 app.layout = html.Div([
     dash_gallery.DashGallery(
         id='input',
@@ -85,15 +85,17 @@ def update(n_clicks, options):
         return options
     else:
         return dash.no_update
-@app.callback(Output('output', 'children'), [Input('input', 'selected')])
-def display_output(images):
+@app.callback(Output('output', 'children'), [Input('input', 'selected'), Input('input','images')])
+def display_output(select,images):
+    changed_id = [p['prop_id'] for p in dash.callback_context.triggered]
     # selected = []
+    print(changed_id)
     # for image in images:
     #     select = False
     #     if 'isSelected' in image:
     #         select = image['isSelected']
     #     selected.append(select)
-    return 'You have selected {}'.format(images)
+    return 'You have selected {}'.format(select)
 
 @app.callback(Output('input','options'),
               Output('box','style'),

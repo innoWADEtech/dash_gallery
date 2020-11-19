@@ -16,12 +16,15 @@
   "author": "Innowade.tech <wade@innowade.tech>",
   "license": "MIT",
   "dependencies": {
+    "memoize-one": "^5.1.1",
     "ramda": "^0.26.1",
     "react-grid-gallery": "^0.5.5"
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.4",
+    "@babel/plugin-syntax-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.2",
@@ -37,8 +40,8 @@
     "react": "^16.8.6",
     "react-docgen": "^4.1.1",
     "react-dom": "^16.8.6",
-    "styled-jsx": "^3.2.1",
     "style-loader": "^0.23.1",
+    "styled-jsx": "^3.2.1",
     "webpack": "4.36.1",
     "webpack-cli": "3.3.6",
     "webpack-serve": "3.1.0"

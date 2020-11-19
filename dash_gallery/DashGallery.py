@@ -14,7 +14,8 @@ which is editable by the user.
 Keyword arguments:
 - id (string; optional): The ID used to identify this component in Dash callbacks.
 - images (list; optional): Images to display
-- options (dict; optional): Options
+- options (dict; default {lightBoxWidth: 1024, rowHeight: 100, margin: 2,
+          showImageCount: true, maxRows: null }): Options
 - selected (list; optional): Gallery Options
 - value (string; optional): The value displayed in the input."""
     @_explicitize_args

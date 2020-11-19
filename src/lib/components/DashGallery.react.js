@@ -2,6 +2,7 @@ import React, {Component, useRef} from 'react';
 import PropTypes from 'prop-types';
 //import { render } from 'react-dom';
 import Gallery from 'react-grid-gallery';
+import memoize from "memoize-one";
 /**
  * ExampleComponent is an example component.
  * It takes a property, `label`, and
@@ -14,14 +15,14 @@ export default class DashGallery extends Component {
         super(props);
         //this.ref = React.createRef();
         //ref = useRef(null)
-        this.state = {... this.defaultProps,
-            images: JSON.parse(JSON.stringify(this.props.images))
-        }
-        if (this.props.options) {
-            for (const [key, value] of Object.entries(this.props.options)) {
-                this.state[key] = value
-            }
-        }
+        // this.state = {... this.defaultProps,
+        //     images: JSON.parse(JSON.stringify(this.props.images))
+        // }
+        // if (this.props.options) {
+        //     for (const [key, value] of Object.entries(this.props.options)) {
+        //         this.state[key] = value
+        //     }
+        // }
        let sele = []
 
        this.props.images.forEach((img,index) => {
@@ -40,7 +41,7 @@ export default class DashGallery extends Component {
             console.log(image)
             console.log(this.props.selected)
             // console.log(this.props.images)
-            var images = this.state.images.slice();
+            var images = this.props.images.slice();
             var img = images[index];
             // let selection = [... this.props.selected]
             // let position = this.props.selected.indexOf(index)
@@ -58,9 +59,11 @@ export default class DashGallery extends Component {
                 img.isSelected = !img.isSelected;
             else
                 img.isSelected = true;
-            this.setState({images: images})
+            this.props.setProps({images: images})
+            console.log(this.props.images)
+            // this.setState({images: images})
             let sele = []
-            this.state.images.forEach((img,index) => {
+            this.props.images.forEach((img,index) => {
                 if(img.hasOwnProperty("isSelected")){
                     if(img.isSelected == true){
                          sele.push(index)
@@ -89,25 +92,29 @@ export default class DashGallery extends Component {
         // if (prevProps.images != images) {
         //     this.setState({images: images})
         // }
-        console.log('prev', prevProps.images)
-        console.log('props', images)
-        console.log('state', this.state.images)
-        if (prevProps.images != images) {
-            this.setState({images: images})
-        }
+        //console.log('prev', prevProps.images)
+       // console.log('props', images)
+        //console.log('state', this.state.images)
+        // if (prevProps.images != images) {
+        //     this.setState({images: images})
+        // }
         // if (this.state.images != images) {
         //     this.props.setProps({images: JSON.parse(JSON.stringify(this.state.images))})
         // }
-        if (prevProps.options != options) {
-            if (options) {
-                this.updateOptions(options).then(() => {
-                //this.setState(options)
-                let imageState = this.state.images.slice()
-                if (imageState[0].hasOwnProperty("tagStyle")) {
-                    delete  imageState[0].tagStyle
-                } else {imageState[0]['tagStyle'] = ''}
-                this.setState({images: imageState})
-            })
+        // if (prevProps.options != options) {
+        //     if (options) {
+        //         // (async (options) => {
+        //         //     await this.setState(options);
+        //         //     this.props.setProps({images: images});
+        //         // })();
+        //         this.updateOptions(options).then(() => {
+        //         //this.setState(options)
+        //         let imageState = this.props.images.slice()
+        //         if (imageState[0].hasOwnProperty("tagStyle")) {
+        //             delete  imageState[0].tagStyle
+        //         } else {imageState[0]['tagStyle'] = ''}
+        //         this.props.setProps({props: imageState})
+        //     })
                 //this.setState({options: options})
                 //this.forceUpdate()
                 //this.setState({images: this.state.images})
@@ -116,20 +123,34 @@ export default class DashGallery extends Component {
                 //     this.state[key] = value
                    
                 // }
-            }
+        //     }
+        // }
+    }
+
+    parseOptions = memoize((options) => {
+
+        const listOptions = {}
+        if (options) {
+        for (const [key, value] of Object.entries(options)) {
+            listOptions[key] = value
         }
     }
+        return listOptions
+    });
+
     render() {
-        const {id, images, setProps, value} = this.props;
+        const {id, images, setProps, value, options} = this.props;
+
+        const imageOptions = this.parseOptions(options);
 
         return (
-            <Gallery images={this.state.images}
+            <Gallery images={images}
                      onSelectImage={this.onSelectImage}
-                     lightBoxWidth={this.state.lightBoxWidth}
-                     rowHeight={this.state.rowHeight}
-                     margin={this.state.margin}
-                     showImageCount={this.state.showImageCount}
-                     maxRows={this.state.maxRows}
+                     lightBoxWidth={imageOptions.lightBoxWidth}
+                     rowHeight={imageOptions.rowHeight}
+                     margin={imageOptions.margin}
+                     showImageCount={imageOptions.showImageCount}
+                     maxRows={imageOptions.maxRows}
             />
             // ref={this.ref}/>
             // <div id={id}>
@@ -155,7 +176,9 @@ export default class DashGallery extends Component {
 }
 
 DashGallery.defaultProps = {
-    selected: []
+    selected: [],
+    options: {lightBoxWidth: 1024, rowHeight: 100, margin: 2,
+              showImageCount: true, maxRows: null }
 };
 
 DashGallery.propTypes = {

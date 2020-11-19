@@ -54,7 +54,11 @@
           "name": "object"
         },
         "required": false,
-        "description": "Options"
+        "description": "Options",
+        "defaultValue": {
+          "value": "{lightBoxWidth: 1024, rowHeight: 100, margin: 2,\n          showImageCount: true, maxRows: null }",
+          "computed": false
+        }
       },
       "selected": {
         "type": {
