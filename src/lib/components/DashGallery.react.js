@@ -23,14 +23,21 @@ export default class DashGallery extends Component {
         //         this.state[key] = value
         //     }
         // }
-       let sele = []
-
-       this.props.images.forEach((img,index) => {
+       let sele = [... this.props.selected]
+       let images = [... this.props.images]
+       images.forEach((img,index) => {
            if(img.hasOwnProperty("isSelected")){
-               if(img.isSelected == true){
+               if(img.isSelected == true && sele.includes(index) == false){
                     sele.push(index)
-               }}})
+               }
+            }
+            if(sele.includes(index)) {
+                images[index].isSelected = true;
+            }
+        })
+        // let selected = new Set([...this.props.selected, ...sele])
         this.props.setProps({selected: sele})
+        this.props.setProps({images: images})
         this.onSelectImage = this.onSelectImage.bind(this);
         //     //gallery: this.updateGallery(this.props.gallery)
         // };
@@ -38,7 +45,7 @@ export default class DashGallery extends Component {
 
     onSelectImage (index, image) {
             // console.log(index)
-            console.log(image)
+            // console.log(image)
             console.log(this.props.selected)
             // console.log(this.props.images)
             var images = this.props.images.slice();
@@ -139,11 +146,19 @@ export default class DashGallery extends Component {
     });
 
     render() {
-        const {id, images, setProps, value, options} = this.props;
+        const {selected, id, images, setProps, value, options} = this.props;
 
         const imageOptions = this.parseOptions(options);
-
+        // let imagine = [...images];
+        // selected.forEach((index) => {
+        //     console.log(index);
+        //     if (imagine[index]) {
+        //         imagine[index].isSelected =true
+        //     }
+        //  })
+        //  console.log(imagine)
         return (
+            <div id={id}>
             <Gallery images={images}
                      onSelectImage={this.onSelectImage}
                      lightBoxWidth={imageOptions.lightBoxWidth}
@@ -152,25 +167,7 @@ export default class DashGallery extends Component {
                      showImageCount={imageOptions.showImageCount}
                      maxRows={imageOptions.maxRows}
             />
-            // ref={this.ref}/>
-            // <div id={id}>
-            //     ExampleComponent: {label}&nbsp;
-            //     <input
-            //         value={value}
-            //         onChange={
-            //             /*
-            //              * Send the new value to the parent component.
-            //              * setProps is a prop that is automatically supplied
-            //              * by dash's front-end ("dash-renderer").
-            //              * In a Dash app, this will update the component's
-            //              * props and send the data back to the Python Dash
-            //              * app server if a callback uses the modified prop as
-            //              * Input or State.
-            //              */
-            //             e => setProps({ value: e.target.value })
-            //         }
-            //     />
-            // </div>
+            </div>
         );
     }
 }
@@ -193,18 +190,14 @@ DashGallery.propTypes = {
     images: PropTypes.array,
 
     /**
-     * Options
+     *  Gallery Options
      */
     options: PropTypes.object,
-    /**
-     * Gallery Options
-     */
-    selected: PropTypes.array,
 
     /**
-     * The value displayed in the input.
+     * Selected Images
      */
-    value: PropTypes.string,
+    selected: PropTypes.array,
 
     /**
      * Dash-assigned callback that should be called to report property changes

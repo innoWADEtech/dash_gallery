@@ -1,4 +1,4 @@
-import dash_gallery
+from gallery import dash_gallery
 import dash
 from dash.dependencies import Input, Output, State
 import dash_html_components as html
@@ -52,8 +52,8 @@ add = {
         'thumbnail':'/assets/plot.png',
         'tags':[{'value': 'data', 'title': 'data'}],
         'caption': 'Data',
-        'thumbnailWidth': 200,
-        'thumbnailHeight': 200,
+        'thumbnailWidth': 320,
+        'thumbnailHeight': 212,
     }
 
    
@@ -67,7 +67,6 @@ app.layout = html.Div([
     dash_gallery.DashGallery(
         id='input',
         images = svg_images,
-        selected = [0,1,2,3,4],
         options = {'lightBoxWidth': 500, 'rowHeight': 200, 'showImageCount': False, 'margin': 5}
     ),
     html.Div(id='output'),
