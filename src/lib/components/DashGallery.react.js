@@ -1,139 +1,45 @@
-import React, {Component, useRef} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-//import { render } from 'react-dom';
 import Gallery from 'react-grid-gallery';
 import memoize from "memoize-one";
-/**
- * ExampleComponent is an example component.
- * It takes a property, `label`, and
- * displays it.
- * It renders an input with the property `value`
- * which is editable by the user.
- */
+
 export default class DashGallery extends Component {
     constructor(props){
         super(props);
-        //this.ref = React.createRef();
-        //ref = useRef(null)
-        // this.state = {... this.defaultProps,
-        //     images: JSON.parse(JSON.stringify(this.props.images))
-        // }
-        // if (this.props.options) {
-        //     for (const [key, value] of Object.entries(this.props.options)) {
-        //         this.state[key] = value
-        //     }
-        // }
-       let sele = [... this.props.selected]
-       let images = [... this.props.images]
-       images.forEach((img,index) => {
-           if(img.hasOwnProperty("isSelected")){
-               if(img.isSelected == true && sele.includes(index) == false){
-                    sele.push(index)
-               }
-            }
-            if(sele.includes(index)) {
-                images[index].isSelected = true;
-            }
-        })
-        // let selected = new Set([...this.props.selected, ...sele])
-        this.props.setProps({selected: sele})
-        this.props.setProps({images: images})
+        let sele = []
+        if (this.props.selected == null) {
+            this.props.images.forEach((img,index) => {
+                if (img.hasOwnProperty("isSelected")) {
+                    if(img.isSelected == true){
+                        sele.push(index)
+                    }
+                }
+            })
+            this.props.setProps({selected: sele})
+        }
         this.onSelectImage = this.onSelectImage.bind(this);
-        //     //gallery: this.updateGallery(this.props.gallery)
-        // };
     }
 
     onSelectImage (index, image) {
-            // console.log(index)
-            // console.log(image)
-            console.log(this.props.selected)
-            // console.log(this.props.images)
-            var images = this.props.images.slice();
-            var img = images[index];
-            // let selection = [... this.props.selected]
-            // let position = this.props.selected.indexOf(index)
-            
-            // let selection = [... this.props.selected]
-            // console.log(selection,position)
-            // if (position == -1) {
-            //     selection = selection.push(index)
-            // } else {
-            //     selection = selection.filter(item => item !== index)
-            //     // selection.slice(position,1)
-            // }
-            // m rconsole.log(selection)
-            if(img.hasOwnProperty("isSelected"))
+            let images = this.props.images.slice();
+            let img = images[index];
+            if (img.hasOwnProperty("isSelected")) {
                 img.isSelected = !img.isSelected;
-            else
+            } else {
                 img.isSelected = true;
-            this.props.setProps({images: images})
-            console.log(this.props.images)
-            // this.setState({images: images})
-            let sele = []
-            this.props.images.forEach((img,index) => {
-                if(img.hasOwnProperty("isSelected")){
-                    if(img.isSelected == true){
+            }
+            let sele = [];
+            images.forEach((img,index) => {
+                if (img.hasOwnProperty("isSelected")) {
+                    if (img.isSelected == true) {
                          sele.push(index)
-                    }}})
-            this.props.setProps({selected: sele})
-            // this.props.setProps({selected: selection})
-            // this.setState({
-            //     images: images
-            // });
-        // this.props.setProps({images: images})
+                    }
+                }
+            })
+            this.props.setProps({selected: sele});
+            this.props.setProps({images: images})
     }
-    // updateGallery(gallery) {
-        // console.log(this.ref)
-        // this.ref.Gallery.enableImageSelection = gallery
-    // }
-    // componentDidMount() {
-        // console.log(this.ref.current)
-        // ref.Gallery.enableImageSelection = this.props.gallery
-    // }
-    async updateOptions (options) {
-        this.setState(options)
-    }
-
-    componentDidUpdate(prevProps) {
-        const {images, options} = this.props
-        // if (prevProps.images != images) {
-        //     this.setState({images: images})
-        // }
-        //console.log('prev', prevProps.images)
-       // console.log('props', images)
-        //console.log('state', this.state.images)
-        // if (prevProps.images != images) {
-        //     this.setState({images: images})
-        // }
-        // if (this.state.images != images) {
-        //     this.props.setProps({images: JSON.parse(JSON.stringify(this.state.images))})
-        // }
-        // if (prevProps.options != options) {
-        //     if (options) {
-        //         // (async (options) => {
-        //         //     await this.setState(options);
-        //         //     this.props.setProps({images: images});
-        //         // })();
-        //         this.updateOptions(options).then(() => {
-        //         //this.setState(options)
-        //         let imageState = this.props.images.slice()
-        //         if (imageState[0].hasOwnProperty("tagStyle")) {
-        //             delete  imageState[0].tagStyle
-        //         } else {imageState[0]['tagStyle'] = ''}
-        //         this.props.setProps({props: imageState})
-        //     })
-                //this.setState({options: options})
-                //this.forceUpdate()
-                //this.setState({images: this.state.images})
-                
-                // for (const [key, value] of Object.entries(options)) {
-                //     this.state[key] = value
-                   
-                // }
-        //     }
-        // }
-    }
-
+        
     parseOptions = memoize((options) => {
 
         const listOptions = {}
@@ -146,20 +52,22 @@ export default class DashGallery extends Component {
     });
 
     render() {
-        const {selected, id, images, setProps, value, options} = this.props;
+        const { id, images, options, style, selected } = this.props;
 
         const imageOptions = this.parseOptions(options);
-        // let imagine = [...images];
-        // selected.forEach((index) => {
-        //     console.log(index);
-        //     if (imagine[index]) {
-        //         imagine[index].isSelected =true
-        //     }
-        //  })
-        //  console.log(imagine)
+        const gallery = [... images]
+
+        if (selected != null) {
+            gallery.forEach(img => {img.isSelected = false})
+            selected.forEach(index => {
+                if (gallery[index]) {
+                    gallery[index].isSelected = true;
+                }
+            })
+        } 
         return (
-            <div id={id}>
-            <Gallery images={images}
+            <div id={id} style={style}>
+            <Gallery images={gallery}
                      onSelectImage={this.onSelectImage}
                      lightBoxWidth={imageOptions.lightBoxWidth}
                      rowHeight={imageOptions.rowHeight}
@@ -173,7 +81,7 @@ export default class DashGallery extends Component {
 }
 
 DashGallery.defaultProps = {
-    selected: [],
+    selected: null,
     options: {lightBoxWidth: 1024, rowHeight: 100, margin: 2,
               showImageCount: true, maxRows: null }
 };
@@ -199,6 +107,10 @@ DashGallery.propTypes = {
      */
     selected: PropTypes.array,
 
+    /**
+     * Style
+     */
+     style: PropTypes.object,
     /**
      * Dash-assigned callback that should be called to report property changes
      * to Dash, to make them available for callbacks.

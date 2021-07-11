@@ -5,11 +5,7 @@ from dash.development.base_component import Component, _explicitize_args
 
 class DashGallery(Component):
     """A DashGallery component.
-ExampleComponent is an example component.
-It takes a property, `label`, and
-displays it.
-It renders an input with the property `value`
-which is editable by the user.
+
 
 Keyword arguments:
 
@@ -20,20 +16,20 @@ Keyword arguments:
     Images to display.
 
 - options (dict; default {lightBoxWidth: 1024, rowHeight: 100, margin: 2,          showImageCount: True, maxRows: None }):
-    Options.
-
-- selected (list; optional):
     Gallery Options.
 
-- value (string; optional):
-    The value displayed in the input."""
+- selected (list; optional):
+    Selected Images.
+
+- style (dict; optional):
+    Style."""
     @_explicitize_args
-    def __init__(self, id=Component.UNDEFINED, images=Component.UNDEFINED, options=Component.UNDEFINED, selected=Component.UNDEFINED, value=Component.UNDEFINED, **kwargs):
-        self._prop_names = ['id', 'images', 'options', 'selected', 'value']
+    def __init__(self, id=Component.UNDEFINED, images=Component.UNDEFINED, options=Component.UNDEFINED, selected=Component.UNDEFINED, style=Component.UNDEFINED, **kwargs):
+        self._prop_names = ['id', 'images', 'options', 'selected', 'style']
         self._type = 'DashGallery'
         self._namespace = 'dash_gallery'
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['id', 'images', 'options', 'selected', 'value']
+        self.available_properties = ['id', 'images', 'options', 'selected', 'style']
         self.available_wildcard_properties =            []
         _explicit_args = kwargs.pop('_explicit_args')
         _locals = locals()

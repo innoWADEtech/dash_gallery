@@ -1,6 +1,6 @@
 # Dash Image Gallery
 
-Dash Image Gallery is a Dash component library.
+Dash Image Gallery is a Dash component library from react-grid-gallery to display images. An additional prop added to track images selected easily though this information is present in the array of object image data. 
 
 Get started with:
 1. Install Dash and its dependencies: https://dash.plotly.com/installation

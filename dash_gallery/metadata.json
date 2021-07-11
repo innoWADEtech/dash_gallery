@@ -1,6 +1,6 @@
 {
   "src/lib/components/DashGallery.react.js": {
-    "description": "ExampleComponent is an example component.\nIt takes a property, `label`, and\ndisplays it.\nIt renders an input with the property `value`\nwhich is editable by the user.",
+    "description": "",
     "displayName": "DashGallery",
     "methods": [
       {
@@ -14,20 +14,6 @@
           },
           {
             "name": "image",
-            "type": null
-          }
-        ],
-        "returns": null
-      },
-      {
-        "name": "updateOptions",
-        "docblock": null,
-        "modifiers": [
-          "async"
-        ],
-        "params": [
-          {
-            "name": "options",
             "type": null
           }
         ],
@@ -54,7 +40,7 @@
           "name": "object"
         },
         "required": false,
-        "description": "Options",
+        "description": "Gallery Options",
         "defaultValue": {
           "value": "{lightBoxWidth: 1024, rowHeight: 100, margin: 2,\n          showImageCount: true, maxRows: null }",
           "computed": false
@@ -65,18 +51,18 @@
           "name": "array"
         },
         "required": false,
-        "description": "Gallery Options",
+        "description": "Selected Images",
         "defaultValue": {
-          "value": "[]",
+          "value": "null",
           "computed": false
         }
       },
-      "value": {
+      "style": {
         "type": {
-          "name": "string"
+          "name": "object"
         },
         "required": false,
-        "description": "The value displayed in the input."
+        "description": "Style"
       },
       "setProps": {
         "type": {

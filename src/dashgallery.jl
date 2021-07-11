@@ -6,20 +6,16 @@ export dashgallery
     dashgallery(;kwargs...)
 
 A DashGallery component.
-ExampleComponent is an example component.
-It takes a property, `label`, and
-displays it.
-It renders an input with the property `value`
-which is editable by the user.
+
 Keyword arguments:
 - `id` (String; optional): The ID used to identify this component in Dash callbacks.
 - `images` (Array; optional): Images to display
-- `options` (Dict; optional): Options
-- `selected` (Array; optional): Gallery Options
-- `value` (String; optional): The value displayed in the input.
+- `options` (Dict; optional): Gallery Options
+- `selected` (Array; optional): Selected Images
+- `style` (Dict; optional): Style
 """
 function dashgallery(; kwargs...)
-        available_props = Symbol[:id, :images, :options, :selected, :value]
+        available_props = Symbol[:id, :images, :options, :selected, :style]
         wild_props = Symbol[]
         return Component("dashgallery", "DashGallery", "dash_gallery", available_props, wild_props; kwargs...)
 end

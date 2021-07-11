@@ -13,7 +13,7 @@
     "build": "npm run build:js && npm run build:py_and_r",
     "build:activated": "npm run build:js && npm run build:py_and_r-activated"
   },
-  "author": "Innowade.tech <wade@innowade.tech>",
+  "author": "innoWADEtech <innowadetech@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "memoize-one": "^5.1.1",

@@ -1,7 +1,7 @@
 
 name = "DashGallery"
 uuid = "1b08a953-4be3-4667-9a23-bb7a89da1e7f"
-authors = ["Innowade.tech <wade@innowade.tech>"]
+authors = ["innoWADEtech <innowadetech@gmail.com>"]
 version = "0.0.1"
 
 [deps]
